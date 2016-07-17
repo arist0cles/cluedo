@@ -4,7 +4,7 @@ public class Game {
 	// players arraylist
 	// die
 	// solution array of cards
-	// board
+	private Board board;
 
 	public Game() {
 		// ask how many players and pick char store in array
@@ -14,6 +14,7 @@ public class Game {
 		// deal remaining cards
 		// get board save to field
 		// call playing game
+		board = new Board();
 	}
 
 	public static void main(String args[]) {
@@ -23,7 +24,7 @@ public class Game {
 	public void playing() {
 
 		boolean onGoing = true;
-
+		System.out.println("as");
 		while (onGoing) {
 			// roll die
 			// loop clockwise? call turn on each player which calls options
