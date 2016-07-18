@@ -13,7 +13,6 @@ public class Board {
 	// connect stairs
 	public Board() {
 		getSquares();
-
 	}
 
 	public void getSquares() {
