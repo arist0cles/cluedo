@@ -1,4 +1,4 @@
-//flames are the adam
+//flames are patrick
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -70,9 +70,7 @@ public class Board {
 			for (int col = 0; col < 25; col++) {
 				
 				ArrayList<Square> conected = new ArrayList<>();
-				if(board[row][col].getClass() == RoomDoorSquare.class){
-					System.out.println("door");
-				}
+				
 				
 				if (row > 0) {
 					Square above = board[row - 1][col];
@@ -100,6 +98,10 @@ public class Board {
 					if(right.getClass() ==  board[row][col].getClass()){
 						conected.add(right);
 					}
+				}
+				
+				if(board[row][col].getClass() == RoomDoorSquare.class){
+					System.out.println("door");
 				}
 				
 				board[row][col].conectSquares(conected);
