@@ -14,11 +14,7 @@ public class Game {
 		// deal remaining cards
 		// get board save to field
 		// call playing game
-		try{
 		board = new Board();
-		} catch(Exception e){
-			
-		}
 	}
 
 	public static void main(String args[]) {

@@ -3,7 +3,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import print.exception.InvalidArgumentsException;
 
 public class Board {
 	private Square[][] board = new Square[25][25];
@@ -12,7 +11,7 @@ public class Board {
 	// room name)D(door)S(direction south east...)
 	// connect all squares that are not walls
 	// connect stairs
-	public Board() throws InvalidArgumentsException {
+	public Board() {
 		getSquares();
 	}
 
