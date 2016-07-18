@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 //Patricks Branch
+=======
+
+// zacs branch
+
+>>>>>>> refs/remotes/origin/zac
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
