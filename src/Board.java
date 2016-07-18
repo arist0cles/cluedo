@@ -3,10 +3,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import print.Printer;
-import print.Printer.Types;
-import print.color.ColoredPrinter;
-import print.color.Ansi.*;
 import print.exception.InvalidArgumentsException;
 
 public class Board {
@@ -18,12 +14,6 @@ public class Board {
 	// connect stairs
 	public Board() throws InvalidArgumentsException {
 		getSquares();
-		//example of a Colored terminal Printer (WINDOWS or UNIX)
-        ColoredPrinter cp = new ColoredPrinter.Builder(1, false)
-                                .foreground(FColor.WHITE).background(BColor.BLUE)   //setting format
-                                .build();
-            //printing according to that format
-        cp.println(cp);
 	}
 
 	public void getSquares() {
