@@ -1,9 +1,6 @@
-<<<<<<< HEAD
-//flames are the adam
-//flames are Zach
-=======
+
 //flames are patrick
->>>>>>> origin/master
+
 
 import java.io.File;
 import java.io.FileNotFoundException;
