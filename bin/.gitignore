@@ -2,10 +2,10 @@
 /Card.class
 /Die.class
 /Game.class
+/NormalSquare.class
 /PersonCard.class
 /RoomCard.class
-/WeaponCard.class
-/NormalSquare.class
 /RoomDoorSquare.class
 /RoomSquare.class
 /Square.class
+/WeaponCard.class
