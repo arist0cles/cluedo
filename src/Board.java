@@ -1,6 +1,15 @@
+<<<<<<< HEAD
 
 //zacs work done
 
+=======
+<<<<<<< HEAD
+//Pats branch
+
+=======
+//zacs work done
+>>>>>>> refs/remotes/origin/master
+>>>>>>> origin/Patrick
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
