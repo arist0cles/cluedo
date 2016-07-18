@@ -5,6 +5,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import print.Printer;
+import print.Printer.Types;
+import print.color.ColoredPrinter;
+import print.color.Ansi.*;
+import print.exception.InvalidArgumentsException;
 
 public class Board {
 	private Square[][] board = new Square[25][25];
@@ -13,9 +18,14 @@ public class Board {
 	// room name)D(door)S(direction south east...)
 	// connect all squares that are not walls
 	// connect stairs
-	public Board() {
+	public Board() throws InvalidArgumentsException {
 		getSquares();
-
+		//example of a Colored terminal Printer (WINDOWS or UNIX)
+        ColoredPrinter cp = new ColoredPrinter.Builder(1, false)
+                                .foreground(FColor.WHITE).background(BColor.BLUE)   //setting format
+                                .build();
+            //printing according to that format
+        cp.println(cp);
 	}
 
 	public void getSquares() {
