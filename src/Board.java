@@ -5,17 +5,26 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Board {
+	
 	private Square[][] board = new Square[25][25];
-
 	// read all squares int 2d array including types doors ?(first letter of
 	// room name)D(door)S(direction south east...)
 	// connect all squares that are not walls
 	// connect stairs
 	public Board() {
 		getSquares();
-
+	}
+	
+	public void updatePlayerPosition(){
+		
 	}
 
+	/*
+	 * Loads board file from text document and interprets the symbols into a grid which it 
+	 * draws on the console.
+	 * 
+	 * 
+	 */
 	public void getSquares() {
 		Scanner s;
 		try {

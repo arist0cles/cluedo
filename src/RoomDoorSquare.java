@@ -1,11 +1,11 @@
 
 public class RoomDoorSquare extends Square{
 
-	String direction ;
+	String direction;
 	
 	public RoomDoorSquare(String direction){
 		
-		this.direction = direction ;
+		this.direction = direction;
 		
 	}
 	

@@ -1,8 +1,13 @@
 
 public class PersonCard extends Card {
 
-	public PersonCard(String name) {
+
+	
+	public PersonCard(String name){
 		super(name);
+		
 	}
+	
+	
 
 }
