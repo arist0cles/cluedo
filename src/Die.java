@@ -1,9 +1,11 @@
 
 public class Die {
-
+	
+	/*
+	 * Returns a random number between 1-6 representing the roll of the dice
+	 */
 	public int roll() {
-		// math random 1-6
-		return 0;
+		return (int)((Math.random()*5)+1);
 	}
 
 }

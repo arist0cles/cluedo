@@ -20,7 +20,7 @@ public class Board {
 	}
 
 	/*
-	 * Loads board file and interprets the symbols into a grid which it 
+	 * Loads board file from text document and interprets the symbols into a grid which it 
 	 * draws on the console.
 	 * 
 	 * 
