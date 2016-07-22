@@ -2,12 +2,10 @@
 public class Player {
 
 	Square current;
-	PersonCard charName;
-	PersonCard weapon;
-	PersonCard room;
+	String charName;
 
-	public Player(PersonCard charName, Square s) {
-		this.charName = charName;
+	public Player( String name ,Square s) {
+		this.charName = name;
 		current = s;
 	}
 }
