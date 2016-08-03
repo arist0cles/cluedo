@@ -21,20 +21,31 @@ public class Player {
 		current.setPlayer(this);
 		String[] splitName = name.split(" ");
 		code = splitName[0].substring(0, 1) + splitName[1].substring(0, 1);
-
 	}
 
+	/**
+	 * Adds a card to the players hand
+	 * 
+	 * @param added the card to be added
+	 */
 	public void addToHand(Card added) {
-
 		if (added != null) {
 			hand.add(added);
 		}
 	}
 
+	/**
+	 * Gets the code
+	 * 
+	 * @return the players abbreviated name as a string
+	 */
 	public String getCode() {
 		return code;
 	}
 
+	/**
+	 * Prints the hand
+	 */
 	public void printHand() {
 		System.out.println("-----------" + charName + "s hand-----------");
 		for (Card card : hand) {
@@ -43,8 +54,16 @@ public class Player {
 		System.out.println("--------------------------------------------");
 	}
 
+	/**
+	 * Deals with player picking a square to move to. Must enter a number/letter combo to represent the square in the 2d array.
+	 * Ensures the input is not garbage
+	 * 
+	 * Calls move as a helper method
+	 * 
+	 * @param dieRoll an int between 1-6, how many squares they can move
+	 * @return true or false dependent on the move being successfully executed
+	 */
 	public boolean moveTurn(int dieRoll) {
-
 		String moveLocation = "flame";
 		String[] letter = null;
 		System.out.println("you have rolled:" + dieRoll);
@@ -55,54 +74,87 @@ public class Player {
 				moveLocation = Game.input.nextLine();
 			}
 		}
-
 		letter = moveLocation.split("-");
-
-		if (Integer.parseInt(letter[0]) > 24 || Integer.parseInt(letter[0]) < 0) {
-
+		int firstIndex = Integer.parseInt(letter[0]);
+		
+		char c = Character.toLowerCase(letter[1].charAt(0));
+		
+		if (firstIndex > 24 || firstIndex < 0)
 			return moveTurn(dieRoll);
-		}
-
-		return (move(Integer.parseInt(letter[0]), letter[1].charAt(0), dieRoll));
+		
+		return (move(firstIndex, c, dieRoll));
 
 	}
 
+	/**
+	 * Moves the player to the square, if that square is within diceRoll range
+	 * 
+	 * @param b how many squares the player has chosen to move by, must be less than dieRoll
+	 * @param a the character representing the columns of our 2d array. eg "A" - 0 "Z" - 25
+	 * @param dieRoll int between 1-6 representing how many squares the player can move
+	 * @return true if a successful move, false otherwise
+	 */
 	public boolean move(int b, Character a, int dieRoll) {
-		int hold = dieRoll;
 		if (!(current.move(b, (int) a - 97, dieRoll) == null)) {
 			current.removePlayer();
-			current = current.move(b, (int) a - 97, hold);
+			current = current.move(b, (int) a - 97, dieRoll);
 			current.current = this;
 			return true;
 		}
 		return false;
 	}
 
+	/**
+	 * Gets the square the player is currently on
+	 * 
+	 * @return the current square
+	 */
 	public Square getSquare() {
-
 		return current;
 	}
 
+	/**
+	 * Checks if the player has won
+	 * 
+	 * @return whether or not the player has won
+	 */
 	public boolean hasWon() {
 		return hasWon;
 	}
 
+	/**
+	 * Prompts the user to see if they would like to make a suggestion, only prompts when they enter a room
+	 * that was not the last room they were in. 
+	 * 
+	 * @param weapons weapons currently active in the game
+	 * @param people people currently active in the game
+	 * @param rooms rooms currently active in the game
+	 * @param isAccusation 
+	 * @return the suggestion
+	 */
 	public Suggestion promptSuggestion(List<Card> weapons, List<Card> people, List<Card> rooms, boolean isAccusation) {
 		String ans = " a";
 
-		System.out.println("do you want to make a suggestion? (y = yes , n = no)");
+		System.out.println("Do you want to make a suggestion? (y = yes , n = no)");
 		while (!ans.matches("[y]|[n]")) {
-
 			ans = Game.input.nextLine();
 		}
 		if (ans.equals("y")) {
-
 			return getSuggestion(weapons, people, rooms, isAccusation);
 		} else {
 			return null;
 		}
 	}
 
+	/**
+	 * 
+	 * 
+	 * @param weapons
+	 * @param people
+	 * @param rooms
+	 * @param isAccusastion
+	 * @return
+	 */
 	private Suggestion getSuggestion(List<Card> weapons, List<Card> people, List<Card> rooms, boolean isAccusastion) {
 		printHand();
 		System.out.println("select a weapon using the number on the left ");
@@ -207,7 +259,6 @@ public class Player {
 	}
 
 	public String getCharName() {
-
 		return charName;
 	}
 

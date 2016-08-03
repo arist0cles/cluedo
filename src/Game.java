@@ -23,7 +23,7 @@ public class Game {
 		setupCards();
 		setUpPlayers();
 		die = new Die();
-		getMurder();
+		generateSolution();
 		ArrayList<Card> fullDeck = new ArrayList<>();
 		fullDeck.addAll(people);
 		fullDeck.addAll(weapons);
@@ -33,6 +33,12 @@ public class Game {
 
 	}
 
+	/**
+	 * 
+	 * Deals the weapon, player and room cards minus the ones in the solution
+	 * 
+	 * @param deal the arraylist of cards to be dealt
+	 */
 	public void dealCards(List<Card> deal) {
 
 		while (!deal.isEmpty()) {
@@ -63,7 +69,11 @@ public class Game {
 
 	}
 
-	public void getMurder() {
+	/**
+	 * Randomly generates a solution made up of one person, weapon and room cards. These are
+	 * not dealt to players
+	 */
+	public void generateSolution() {
 
 		Card p = people.get((int) (Math.random() * 6));
 		solution.add(p);
@@ -98,8 +108,10 @@ public class Game {
 
 	}
 
+	/**
+	 * Prints out the layout of the rooms to help the player
+	 */
 	public void printRooms() {
-
 		System.out.println("__________________________________ROOMS______________________________________");
 		System.out.println("-----------------------------------------------------------------------------");
 		System.out.println("-kitchen-------------------------ballRoom-----------------------conservatory-");
@@ -112,23 +124,23 @@ public class Game {
 		System.out.println("-----------------------------------------------------------------------------");
 		System.out.println("-Lounge----------------------------Hall--------------------------------Study-");
 		System.out.println();
-
 	}
 
+	/**
+	 * Prints out the cards which have been ruled out
+	 */
 	public void printRuledOut() {
 		System.out.println("________________________________Ruled_Out____________________________________");
 		for (Card c : ruledOut) {
 			System.out.println(c.getName());
-
 		}
 		System.out.println("_____________________________________________________________________________");
 	}
 
-	/*
+	/**
 	 * Helper method for setup, generates the deck
 	 */
 	private void setupCards() {
-
 		Card missScarlett = new PersonCard("Miss Scarlett");
 		Card professorPlum = new PersonCard("Professor Plum");
 		Card mrsPeacock = new PersonCard("Mrs Peacock");
@@ -179,6 +191,13 @@ public class Game {
 		rooms.add(study);
 	}
 
+	/**
+	 * Checks the suggestion against the players hands, if they have a matching card/cards they 
+	 * must select the one to discard
+	 * 
+	 * @param suggestion an object containing the cards making up the suggestion
+	 * @param suggester the player making the suggestion
+	 */
 	public void checkSuggestion(Suggestion suggestion, Player suggester) {
 		for (Player p : players) {
 			if (p != suggester) {
@@ -192,6 +211,11 @@ public class Game {
 		}
 	}
 
+	/**
+	 * Loops repeatedly while the game has not been won. Goes through each player 
+	 * 
+	 * 
+	 */
 	public void playing() {
 
 		boolean onGoing = true;
@@ -220,7 +244,6 @@ public class Game {
 
 					while (p.moveTurn(dieRoll) == false) {
 						System.out.println("cant move there");
-
 						try {
 							Thread.sleep(2000);
 						} catch (InterruptedException e) {
@@ -275,6 +298,12 @@ public class Game {
 		}
 	}
 
+	/**
+	 * Checks to see if the suggestion/accusation was correct
+	 * 
+	 * @param attempt the accustaion
+	 * @return whether the accusation was successful or not
+	 */
 	private boolean checkAttempt(Suggestion attempt) {
 		for (Card c : solution) {
 			if (!attempt.contains(c)) {
@@ -284,6 +313,11 @@ public class Game {
 		return true;
 	}
 
+	/**
+	 * The main
+	 * 
+	 * @param args
+	 */
 	public static void main(String args[]) {
 		new Game();
 	}

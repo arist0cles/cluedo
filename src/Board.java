@@ -19,15 +19,9 @@ public class Board {
 		getSquares();
 	}
 
-	public void updatePlayerPosition() {
-
-	}
-
-	/*
+	/**
 	 * Loads board file from text document and interprets the symbols into a
 	 * grid which it draws on the console.
-	 * 
-	 * 
 	 */
 	public void getSquares() {
 		Scanner s;
@@ -76,7 +70,11 @@ public class Board {
 		link();
 		
 	}
-
+	
+	/**
+	 * Links together the squares to enable movement checking. Cannot move through squares that
+	 * are not linked
+	 */
 	public void link() {
 		for (int row = 0; row < 25; row++) {
 			for (int col = 0; col < 25; col++) {
@@ -176,6 +174,10 @@ public class Board {
 		}
 	}
 
+	/**
+	 * Draws the board grid with letters for columns and numbers for rows, so "0-A" is the first square. If any of the 
+	 * squares have a player standing on them, draw the players two letter abbreviation
+	 */
 	public void draw() {
 		String[] alpha = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R",
 				"S", "T", "U", "V", "W", "X", "Y" };
@@ -221,7 +223,12 @@ public class Board {
 			System.out.print("\n");
 		}
 	}
-
+	
+	/**
+	 * Fills the given arraylist with player staring positions
+	 * 
+	 * @param startSquares the arraylist to be filled
+	 */
 	public void getStartSquares(List<Square> startSquares) {
 		startSquares.add(board[0][6]);
 		startSquares.add(board[0][17]);
@@ -232,8 +239,14 @@ public class Board {
 
 	}
 
-	public Object GetSquare(int i, int b) {
-		
-		return board[i][b];
+	/**
+	 * Gets the square at the given indices
+	 * 
+	 * @param i index one
+	 * @param j index two
+	 * @return the square at the indices
+	 */
+	public Square GetSquare(int i, int j) {
+		return board[i][j];
 	}
 }
