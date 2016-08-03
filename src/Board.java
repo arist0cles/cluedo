@@ -2,11 +2,15 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Board {
-	
+
 	private Square[][] board = new Square[25][25];
+	
 	// read all squares int 2d array including types doors ?(first letter of
 	// room name)D(door)S(direction south east...)
 	// connect all squares that are not walls
@@ -14,14 +18,14 @@ public class Board {
 	public Board() {
 		getSquares();
 	}
-	
-	public void updatePlayerPosition(){
-		
+
+	public void updatePlayerPosition() {
+
 	}
 
 	/*
-	 * Loads board file from text document and interprets the symbols into a grid which it 
-	 * draws on the console.
+	 * Loads board file from text document and interprets the symbols into a
+	 * grid which it draws on the console.
 	 * 
 	 * 
 	 */
@@ -54,9 +58,9 @@ public class Board {
 						board[row][col] = new RoomDoorSquare(square);
 						col++;
 					}
-					if (square.equals("R")) {
+					else if (square.startsWith("R")) {
 
-						board[row][col] = new RoomSquare();
+						board[row][col] = new RoomSquare(square);
 						col++;
 					}
 				}
@@ -70,7 +74,7 @@ public class Board {
 		}
 
 		link();
-		draw();
+		
 	}
 
 	public void link() {
@@ -78,11 +82,12 @@ public class Board {
 			for (int col = 0; col < 25; col++) {
 
 				ArrayList<Square> conected = new ArrayList<>();
-
+				board[row][col].addBoard(this);
 				if (row > 0) {
 					Square above = board[row - 1][col];
 					if (above.getClass() == board[row][col].getClass()) {
 						conected.add(above);
+						
 					}
 				}
 
@@ -90,6 +95,7 @@ public class Board {
 					Square below = board[row + 1][col];
 					if (below.getClass() == board[row][col].getClass()) {
 						conected.add(below);
+						
 					}
 				}
 
@@ -97,6 +103,7 @@ public class Board {
 					Square left = board[row][col - 1];
 					if (left.getClass() == board[row][col].getClass()) {
 						conected.add(left);
+						
 					}
 				}
 
@@ -104,29 +111,35 @@ public class Board {
 					Square right = board[row][col + 1];
 					if (right.getClass() == board[row][col].getClass()) {
 						conected.add(right);
+						
 					}
 				}
 
 				if (board[row][col].getClass() == RoomDoorSquare.class) {
 					Square door = board[row][col];
 					if (door instanceof RoomDoorSquare) {
-						if (((RoomDoorSquare) door).getrDirection().equals("RDN")) {
+						if (((RoomDoorSquare) door).getrDirection().startsWith("RDN")) {
 							conected.add(board[row - 1][col]);
+							board[row - 1][col].connectSquare(door);
 						}
-						if (((RoomDoorSquare) door).getrDirection().equals("RDE")) {
+						if (((RoomDoorSquare) door).getrDirection().startsWith("RDE")) {
 							conected.add(board[row][col + 1]);
+							board[row][col+1].connectSquare(door);
 						}
-						if (((RoomDoorSquare) door).getrDirection().equals("RDS")) {
+						if (((RoomDoorSquare) door).getrDirection().startsWith("RDS")) {
 							conected.add(board[row + 1][col]);
+							board[row + 1][col].connectSquare(door);
 						}
-						if (((RoomDoorSquare) door).getrDirection().equals("RDW")) {
+						if (((RoomDoorSquare) door).getrDirection().startsWith("RDW")) {
 							conected.add(board[row][col - 1]);
+							board[row][col - 1].connectSquare(door);
 						}
 
 						if (row > 0) {
 							Square above = board[row - 1][col];
-							if (above.getClass() == board[row][col].getClass()) {
+							if (above.getClass() == RoomSquare.class) {
 								conected.add(above);
+								board[row - 1][col].connectSquare(door);
 							}
 						}
 
@@ -134,6 +147,7 @@ public class Board {
 							Square below = board[row + 1][col];
 							if (below.getClass() == RoomSquare.class) {
 								conected.add(below);
+								board[row+1][col].connectSquare(door);
 							}
 						}
 
@@ -141,6 +155,7 @@ public class Board {
 							Square left = board[row][col - 1];
 							if (left.getClass() == RoomSquare.class) {
 								conected.add(left);
+								board[row ][col-1].connectSquare(door);
 							}
 						}
 
@@ -148,6 +163,7 @@ public class Board {
 							Square right = board[row][col + 1];
 							if (right.getClass() == RoomSquare.class) {
 								conected.add(right);
+								board[row][col+1].connectSquare(door);
 							}
 						}
 
@@ -168,37 +184,56 @@ public class Board {
 			System.out.print(alpha[i] + "  ");
 		}
 		System.out.println();
-		int i = 0 ;
+		int i = 0;
 		for (Square[] row : board) {
-			if(i<10){
+			if (i < 10) {
 				System.out.print(i++ + "  ");
-			}else{System.out.print(i++ + " ");}
-			
-			for (Square s : row) {
-
-				if (s instanceof NormalSquare) {
-					// do draw method
-					System.out.print("0  ");
-				}
-
-				if (s instanceof RoomSquare) {
-					// do draw method
-					System.out.print("#  ");
-				}
-
-				if (s instanceof RoomDoorSquare) {
-					// do draw method
-					if (((RoomDoorSquare) s).getrDirection().equals("RDS")
-							|| ((RoomDoorSquare) s).getrDirection().equals("RDN")) {
-						System.out.print("|| ");
-					} else {
-						System.out.print("=  ");
-					}
-				}
-
+			} else {
+				System.out.print(i++ + " ");
 			}
 
+			for (Square s : row) {
+				if (s.hasPlayer()) {
+					System.out.print(s.getCode().trim() + " ");
+				} else {
+					if (s instanceof NormalSquare) {
+						// do draw method
+						System.out.print("0  ");
+					}
+
+					if (s instanceof RoomSquare) {
+						// do draw method
+						System.out.print("#  ");
+					}
+
+					if (s instanceof RoomDoorSquare) {
+						// do draw method
+						if (((RoomDoorSquare) s).getrDirection().equals("RDS")
+								|| ((RoomDoorSquare) s).getrDirection().equals("RDN")) {
+							System.out.print("|| ");
+						} else {
+							System.out.print("=  ");
+						}
+					}
+
+				}
+			}
 			System.out.print("\n");
 		}
+	}
+
+	public void getStartSquares(List<Square> startSquares) {
+		startSquares.add(board[0][6]);
+		startSquares.add(board[0][17]);
+		startSquares.add(board[24][17]);
+		startSquares.add(board[24][7]);
+		startSquares.add(board[7][0]);
+		startSquares.add(board[12][24]);
+
+	}
+
+	public Object GetSquare(int i, int b) {
+		
+		return board[i][b];
 	}
 }
