@@ -1,7 +1,7 @@
 
 public abstract class Card {
 
-	String Name;
+	private String Name;
 
 	public Card(String name) {
 		Name = name;
