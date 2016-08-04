@@ -2,9 +2,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * The overarching class of the Cluedo game. Contains the main method in
+ * addition to general setup methods to deal the cards, generate the solution
+ * setup the players. Also contains the playing method which is the main loop
+ * the gameplay happens in.
+ * 
+ * @author Zach and Patrick
+ *
+ */
 public class Game {
 
-	private int numOfPlayers;
+	private int numOfPlayers = 0;
 	private List<Player> players = new ArrayList<>();
 	private Die die;
 	private List<Card> people = new ArrayList<>();
@@ -12,12 +21,11 @@ public class Game {
 	private List<Card> rooms = new ArrayList<>();
 	private List<Card> solution = new ArrayList<>();
 	private List<Square> startSquares = new ArrayList<>();
-	private List<Card> ruledOut = new ArrayList<Card>();
+	private List<Card> ruledOut = new ArrayList<>();
 	private Board board;
 	public static Scanner input = new Scanner(System.in);
 
 	public Game() {
-
 		board = new Board();
 		board.getStartSquares(startSquares);
 		setupCards();
@@ -30,6 +38,29 @@ public class Game {
 		fullDeck.addAll(rooms);
 		dealCards(fullDeck);
 		playing();
+	}
+
+	public Game(Testhelper t) {
+		switch (t.getTestNum()) {
+		case (1):
+			board = new Board();
+			board.getStartSquares(startSquares);
+			setupCards();
+			setUpPlayers();
+			break;
+		case (2):
+			board = new Board();
+			board.getStartSquares(startSquares);
+			setupCards();
+			setUpPlayers();
+			die = new Die();
+			generateSolution();
+			break;
+		case (3):
+			setupCards();
+			generateSolution();
+			break;
+		}
 
 	}
 
@@ -37,7 +68,8 @@ public class Game {
 	 * 
 	 * Deals the weapon, player and room cards minus the ones in the solution
 	 * 
-	 * @param deal the arraylist of cards to be dealt
+	 * @param deal
+	 *            the arraylist of cards to be dealt
 	 */
 	public void dealCards(List<Card> deal) {
 
@@ -45,11 +77,13 @@ public class Game {
 
 			if ((deal.size()) % numOfPlayers == 0) {
 				for (Player p : players) {
-					
+
 					Card dealt = deal.get((int) (Math.random() * deal.size()));
-					while(solution.contains(dealt)){
+					while (solution.contains(dealt)) {
 						deal.remove(dealt);
-						if(deal.isEmpty()){return;}
+						if (deal.isEmpty()) {
+							return;
+						}
 						dealt = deal.get((int) (Math.random() * deal.size()));
 					}
 					p.addToHand(dealt);
@@ -57,9 +91,11 @@ public class Game {
 				}
 			} else {
 				Card dealt = deal.get((int) (Math.random() * deal.size()));
-				while(solution.contains(dealt)){
+				while (solution.contains(dealt)) {
 					deal.remove(dealt);
-					if(deal.isEmpty()){return;}
+					if (deal.isEmpty()) {
+						return;
+					}
 					dealt = deal.get((int) (Math.random() * deal.size()));
 				}
 				ruledOut.add(dealt);
@@ -70,22 +106,19 @@ public class Game {
 	}
 
 	/**
-	 * Randomly generates a solution made up of one person, weapon and room cards. These are
-	 * not dealt to players
+	 * Randomly generates a solution made up of one person, weapon and room
+	 * cards. These are not dealt to players
 	 */
 	public void generateSolution() {
 
 		Card p = people.get((int) (Math.random() * 6));
 		solution.add(p);
-		
 
 		Card w = weapons.get((int) (Math.random() * 6));
 		solution.add(w);
-		
 
 		Card r = rooms.get((int) (Math.random() * 6));
 		solution.add(r);
-		
 
 	}
 
@@ -192,11 +225,13 @@ public class Game {
 	}
 
 	/**
-	 * Checks the suggestion against the players hands, if they have a matching card/cards they 
-	 * must select the one to discard
+	 * Checks the suggestion against the players hands, if they have a matching
+	 * card/cards they must select the one to discard
 	 * 
-	 * @param suggestion an object containing the cards making up the suggestion
-	 * @param suggester the player making the suggestion
+	 * @param suggestion
+	 *            an object containing the cards making up the suggestion
+	 * @param suggester
+	 *            the player making the suggestion
 	 */
 	public void checkSuggestion(Suggestion suggestion, Player suggester) {
 		for (Player p : players) {
@@ -212,7 +247,8 @@ public class Game {
 	}
 
 	/**
-	 * Loops repeatedly while the game has not been won. Goes through each player 
+	 * Loops repeatedly while the game has not been won. Goes through each
+	 * player
 	 * 
 	 * 
 	 */
@@ -236,7 +272,7 @@ public class Game {
 					printRooms();
 					board.draw();
 					printRuledOut();
-					for(Card c :solution){
+					for (Card c : solution) {
 						System.out.println(c.getName());
 					}
 					int dieRoll = die.roll();
@@ -291,7 +327,7 @@ public class Game {
 		}
 		if (onGoing == false) {
 			System.out.println("a player has won");
-			// win case 
+			// win case
 		} else {
 			onGoing = false;
 			System.out.println("all players have lost");
@@ -301,7 +337,8 @@ public class Game {
 	/**
 	 * Checks to see if the suggestion/accusation was correct
 	 * 
-	 * @param attempt the accustaion
+	 * @param attempt
+	 *            the accusation
 	 * @return whether the accusation was successful or not
 	 */
 	private boolean checkAttempt(Suggestion attempt) {
@@ -314,11 +351,34 @@ public class Game {
 	}
 
 	/**
-	 * The main
+	 * The main, creates a new instance of game
 	 * 
 	 * @param args
 	 */
 	public static void main(String args[]) {
 		new Game();
+	}
+
+	public int getNumOfPlayers() {
+		// TODO Auto-generated method stub
+		return numOfPlayers;
+	}
+	
+	public List<Player> getPlayers() {
+		return players;
+	}
+
+	public List<Card> getSolution() {
+		return solution;
+	}
+
+	public List<Card> getPeople() {
+		// TODO Auto-generated method stub
+		return people;
+	}
+
+	public List<Card> getWeapons() {
+		// TODO Auto-generated method stub
+		return weapons;
 	}
 }

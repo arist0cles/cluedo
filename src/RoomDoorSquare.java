@@ -1,11 +1,15 @@
-
+/**
+ * Represents the concept of a door, connecting a room to the normal squares around it 
+ * 
+ * @author Zach and Patrick
+ * 
+ */
 public class RoomDoorSquare extends Square {
 
 	String direction;
 	String room;
 
 	public RoomDoorSquare(String direction) {
-
 		String RoomCode = direction.substring(3, 4);
 		this.direction = direction.substring(0, 3);
 
@@ -36,14 +40,22 @@ public class RoomDoorSquare extends Square {
 		if (RoomCode.equals("9")) {
 			room = "Study";
 		}
-
 	}
 
-public String getRoom(){
-		
+	/**
+	 * Get the room associated with this door
+	 * 
+	 * @return the name of the room
+	 */
+	public String getRoom() {
 		return room;
 	}
 
+	/**
+	 * Get the direction this door faces
+	 * 
+	 * @return the direction this door faces
+	 */
 	public String getrDirection() {
 		return direction;
 	}

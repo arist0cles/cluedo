@@ -1,4 +1,8 @@
-
+/**Represents a square that is contained inside a room
+ * 
+ * @author Zach and Patrick
+ *
+ */
 public class RoomSquare extends Square {
 	String room;
 

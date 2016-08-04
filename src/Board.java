@@ -7,6 +7,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+/**
+ * The board class is the implementation of the board in a game of Cluedo. A board is a 25x25 2d array of Square
+ * Objects representing either a room a door or a normal square. The board is read in from a text file. The squares that
+ * comprise the board are also linked together in this class to make movement easier
+ * 
+ * @author Zach and Patrick
+ */
 public class Board {
 
 	private Square[][] board = new Square[25][25];
