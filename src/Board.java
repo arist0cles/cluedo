@@ -7,20 +7,26 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+/**
+ * The board class is the implementation of the board in a game of Cluedo. A
+ * board is a 25x25 2d array of Square Objects representing either a room a door
+ * or a normal square. The board is read in from a text file. The squares that
+ * comprise the board are also linked together in this class to make movement
+ * easier
+ * 
+ * @author Zach and Patrick
+ */
 public class Board {
 
 	private Square[][] board = new Square[25][25];
-	
 
 	public Board() {
 		getSquares();
 	}
 
-	/*
+	/**
 	 * Loads board file from text document and interprets the symbols into a
 	 * grid which it draws on the console.
-	 * 
-	 * 
 	 */
 	public void getSquares() {
 		Scanner s;
@@ -50,8 +56,7 @@ public class Board {
 
 						board[row][col] = new RoomDoorSquare(square);
 						col++;
-					}
-					else if (square.startsWith("R")) {
+					} else if (square.startsWith("R")) {
 
 						board[row][col] = new RoomSquare(square);
 						col++;
@@ -67,9 +72,13 @@ public class Board {
 		}
 
 		link();
-		
+
 	}
 
+	/**
+	 * Links together the squares to enable movement checking. Cannot move
+	 * through squares that are not linked
+	 */
 	public void link() {
 		for (int row = 0; row < 25; row++) {
 			for (int col = 0; col < 25; col++) {
@@ -80,7 +89,7 @@ public class Board {
 					Square above = board[row - 1][col];
 					if (above.getClass() == board[row][col].getClass()) {
 						conected.add(above);
-						
+
 					}
 				}
 
@@ -88,7 +97,7 @@ public class Board {
 					Square below = board[row + 1][col];
 					if (below.getClass() == board[row][col].getClass()) {
 						conected.add(below);
-						
+
 					}
 				}
 
@@ -96,7 +105,7 @@ public class Board {
 					Square left = board[row][col - 1];
 					if (left.getClass() == board[row][col].getClass()) {
 						conected.add(left);
-						
+
 					}
 				}
 
@@ -104,7 +113,7 @@ public class Board {
 					Square right = board[row][col + 1];
 					if (right.getClass() == board[row][col].getClass()) {
 						conected.add(right);
-						
+
 					}
 				}
 
@@ -117,7 +126,7 @@ public class Board {
 						}
 						if (((RoomDoorSquare) door).getrDirection().startsWith("RDE")) {
 							conected.add(board[row][col + 1]);
-							board[row][col+1].connectSquare(door);
+							board[row][col + 1].connectSquare(door);
 						}
 						if (((RoomDoorSquare) door).getrDirection().startsWith("RDS")) {
 							conected.add(board[row + 1][col]);
@@ -140,7 +149,7 @@ public class Board {
 							Square below = board[row + 1][col];
 							if (below.getClass() == RoomSquare.class) {
 								conected.add(below);
-								board[row+1][col].connectSquare(door);
+								board[row + 1][col].connectSquare(door);
 							}
 						}
 
@@ -148,7 +157,7 @@ public class Board {
 							Square left = board[row][col - 1];
 							if (left.getClass() == RoomSquare.class) {
 								conected.add(left);
-								board[row ][col-1].connectSquare(door);
+								board[row][col - 1].connectSquare(door);
 							}
 						}
 
@@ -156,7 +165,7 @@ public class Board {
 							Square right = board[row][col + 1];
 							if (right.getClass() == RoomSquare.class) {
 								conected.add(right);
-								board[row][col+1].connectSquare(door);
+								board[row][col + 1].connectSquare(door);
 							}
 						}
 
@@ -169,6 +178,11 @@ public class Board {
 		}
 	}
 
+	/**
+	 * Draws the board grid with letters for columns and numbers for rows, so
+	 * "0-A" is the first square. If any of the squares have a player standing
+	 * on them, draw the players two letter abbreviation
+	 */
 	public void draw() {
 		String[] alpha = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R",
 				"S", "T", "U", "V", "W", "X", "Y" };
@@ -215,6 +229,12 @@ public class Board {
 		}
 	}
 
+	/**
+	 * Fills the given arraylist with player staring positions
+	 * 
+	 * @param startSquares
+	 *            the arraylist to be filled
+	 */
 	public void getStartSquares(List<Square> startSquares) {
 		startSquares.add(board[0][6]);
 		startSquares.add(board[0][17]);
@@ -225,8 +245,16 @@ public class Board {
 
 	}
 
-	public Object GetSquare(int i, int b) {
-		
-		return board[i][b];
+	/**
+	 * Gets the square at the given indices
+	 * 
+	 * @param i
+	 *            index one
+	 * @param j
+	 *            index two
+	 * @return the square at the indices
+	 */
+	public Square GetSquare(int i, int j) {
+		return board[i][j];
 	}
 }
