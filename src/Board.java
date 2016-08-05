@@ -11,16 +11,9 @@ public class Board {
 
 	private Square[][] board = new Square[25][25];
 	
-	// read all squares int 2d array including types doors ?(first letter of
-	// room name)D(door)S(direction south east...)
-	// connect all squares that are not walls
-	// connect stairs
+
 	public Board() {
 		getSquares();
-	}
-
-	public void updatePlayerPosition() {
-
 	}
 
 	/*
