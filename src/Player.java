@@ -71,7 +71,7 @@ public class Player {
 		int hold = dieRoll;
 		if (!(current.move(b, (int) a - 97, dieRoll) == null)) {
 			current.removePlayer();
-			current = current.move(b, (int) a - 97, hold);
+			current = current.move(b, (int) a - 97, dieRoll);
 			current.current = this;
 			return true;
 		}
